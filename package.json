@@ -1,8 +1,8 @@
 {
-  "name": "rainbow-logger",
-  "version": "1.0.0",
+  "name": "jaskier",
+  "version": "0.0.1",
   "main": "index.js",
-  "author": "Yann Gouffon <github@yago-art.ch>",
+  "author": "Yann Gouffon <hello@yago.io>",
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
