@@ -1,11 +1,19 @@
 const chalk = require('chalk');
 
+const isBrowser = process.title === 'browser';
+const methods = [
+  "warn"
+]
+
 class Logger {
   constructor() {
-    this.isBrowser = process.title === 'browser';
-  }
+    // this.console = console;
+    this.console = {};
 
-  
+    methods.forEach((method) => {
+      this.console[method] = console[method];
+    })
+  }
 
   print(content, opts) {
     let input = content;
@@ -13,16 +21,16 @@ class Logger {
 
     [...input].forEach((item) => {
       if (typeof item === 'string') {
-        if (this.isBrowser) {
-          console[opts.method](`%c ${opts.emoji} ${item}`, opts.browser);
+        if (isBrowser) {
+          this.console[opts.method](`%c ${opts.emoji} ${item}`, opts.browser);
         } else {
-          console[opts.method](chalk[opts.server](`${opts.emoji}  ${item}`));
+          this.console[opts.method](chalk[opts.server](`${opts.emoji}  ${item}`));
         }
       } else {
-        if (this.isBrowser) {
-          console[opts.method](`%c ${opts.emoji}`, opts.browser, item);
+        if (isBrowser) {
+          this.console[opts.method](`%c ${opts.emoji}`, opts.browser, item);
         } else {
-          console[opts.method](chalk[opts.server](`${opts.emoji} `), item);
+          this.console[opts.method](chalk[opts.server](`${opts.emoji} `), item);
         }
       }
       
@@ -40,6 +48,8 @@ class Logger {
 }
 
 const log = new Logger();
-
-log.warn('hello', ['machin', 'chose'], {title: 'hello'})
-log.warn('hello world')
+methods.forEach((method) => {
+  console[method] = (...content) => {
+    log[method](...content);
+  };
+});
