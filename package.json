@@ -1,0 +1,17 @@
+{
+  "name": "rainbow-logger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yann Gouffon <github@yago-art.ch>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --config webpack.config.js",
+    "serve": "./node_modules/.bin/webpack --config webpack.config.js --watch"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3"
+  },
+  "devDependencies": {
+    "webpack": "^2.5.1"
+  }
+}
