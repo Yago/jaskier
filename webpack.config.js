@@ -13,6 +13,18 @@ module.exports = {
     path: __dirname,
     filename: 'bundle.js',
   },
+  module: {
+    loaders: [
+      {
+        test: /\.(js)$/,
+        exclude: /(node_modules|bower_components)/,
+        loaders: 'babel-loader',
+        query: {
+          presets: ['es2017', 'babel-preset-es2015-without-strict'],
+        },
+      },
+    ],
+  },
   resolve: {
     extensions: ['.js'],
     modules: [
