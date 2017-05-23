@@ -3,6 +3,7 @@ const theme = require('./theme.js');
 
 const isBrowser = process.title === 'browser';
 const methods = [
+  'assert',
   'error',
   'info',
   'log',
@@ -85,6 +86,12 @@ class Logger {
 
   error() {
     this.print(arguments, this.theme.error);
+  }
+
+  assert() {
+    if (!arguments[0]) {
+      this.print(['Assertion failed: console.assert'], this.theme.error);
+    }
   }
 
   time() {
