@@ -6,6 +6,7 @@ const methods = [
   'error',
   'info',
   'log',
+  'print',
   'time',
   'timeEnd',
   'warn',
@@ -25,7 +26,7 @@ class Logger {
 
   print(content, opts) {
     let input = content;
-    if (typeof content === 'string') input = { content };
+    if (typeof content === 'string') input = [content];
 
     const date = new Date;
     const currentTime = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
@@ -112,3 +113,9 @@ methods.forEach((method) => {
 // setTimeout(() => {
 //   console.timeEnd('This is a timer');
 // }, 100);
+// console.print('This is a custom message', {
+//   browser: 'font-weight: bold; color: #C678DD;',
+//   server: 'magenta',
+//   emoji: '👻',
+//   method: 'log',
+// });
