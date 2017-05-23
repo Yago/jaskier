@@ -2,12 +2,18 @@ const chalk = require('chalk');
 
 const isBrowser = process.title === 'browser';
 const methods = [
-  "warn"
+  'error',
+  'info',
+  'log',
+  'time',
+  'timeEnd',
+  'warn',
 ];
 
 class Logger {
   constructor() {
     this.defaultStyle = 'color: #A6B2C0;';
+    this.nodeTimer = false;
     this.console = {};
     methods.forEach((method) => {
       this.console[method] = console[method];
@@ -21,6 +27,12 @@ class Logger {
     const date = new Date;
     const currentTime = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
 
+    if (this.nodeTimer) {
+      input = [];
+      this.nodeTimer = false;
+      this.console.log(...content);
+    };
+
     [...input].forEach((item) => {
       if (typeof item === 'string') {
         if (isBrowser) {
@@ -32,7 +44,7 @@ class Logger {
         } else {
           this.console[opts.method](
             chalk.grey(currentTime),
-            chalk[opts.server](`${opts.emoji}  ${item}`)
+            chalk.bold[opts.server](`${opts.emoji}  ${item}`)
           );
         }
       } else {
@@ -46,7 +58,7 @@ class Logger {
         } else {
           this.console[opts.method](
             chalk.grey(currentTime),
-            chalk[opts.server](`${opts.emoji} `),
+            chalk.bold[opts.server](`${opts.emoji} `),
             item
           );
         }
@@ -55,13 +67,49 @@ class Logger {
     });
   }
 
+  log() {
+    this.print(arguments, {
+      browser: 'font-weight: bold; color: #919BA7;',
+      server: 'white',
+      emoji: '🔬',
+      method: 'log',
+    });
+  }
+
+  info() {
+    this.print(arguments, {
+      browser: 'font-weight: bold; color: #61AFEF;',
+      server: 'blue',
+      emoji: 'ℹ️',
+      method: 'info',
+    });
+  }
+
   warn() {
     this.print(arguments, {
-      browser: 'font-weight: bold; color: #F99157;',
+      browser: 'font-weight: bold; color: #E5C07B;',
       server: 'yellow',
       emoji: '⚠️',
       method: 'warn',
     });
+  }
+
+  error() {
+    this.print(arguments, {
+      browser: 'font-weight: bold; color: #E06C75;',
+      server: 'red',
+      emoji: '🚨',
+      method: 'error',
+    });
+  }
+
+  time() {
+    this.console.time(...arguments);
+  }
+
+  timeEnd() {
+    if (!isBrowser) this.nodeTimer = true;
+    this.console.timeEnd(...arguments);
   }
 }
 
@@ -71,3 +119,13 @@ methods.forEach((method) => {
     log[method](...content);
   };
 });
+
+
+// console.log('This is a log');
+// console.info('This is an info');
+// console.warn('This is a warning');
+// console.error('This is an error');
+// console.time('Timou');
+// setTimeout(() => {
+//   console.timeEnd('Timou');
+// }, 100);
