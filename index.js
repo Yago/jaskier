@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const theme = require('./theme.js');
 
 const isBrowser = process.title === 'browser';
 const methods = [
@@ -11,9 +12,11 @@ const methods = [
 ];
 
 class Logger {
-  constructor() {
+  constructor(theme) {
+    this.theme = theme;
     this.defaultStyle = 'color: #A6B2C0;';
     this.nodeTimer = false;
+
     this.console = {};
     methods.forEach((method) => {
       this.console[method] = console[method];
@@ -68,39 +71,19 @@ class Logger {
   }
 
   log() {
-    this.print(arguments, {
-      browser: 'font-weight: bold; color: #919BA7;',
-      server: 'white',
-      emoji: '🔬',
-      method: 'log',
-    });
+    this.print(arguments, this.theme.log);
   }
 
   info() {
-    this.print(arguments, {
-      browser: 'font-weight: bold; color: #61AFEF;',
-      server: 'blue',
-      emoji: 'ℹ️',
-      method: 'info',
-    });
+    this.print(arguments, this.theme.info);
   }
 
   warn() {
-    this.print(arguments, {
-      browser: 'font-weight: bold; color: #E5C07B;',
-      server: 'yellow',
-      emoji: '⚠️',
-      method: 'warn',
-    });
+    this.print(arguments, this.theme.warn);
   }
 
   error() {
-    this.print(arguments, {
-      browser: 'font-weight: bold; color: #E06C75;',
-      server: 'red',
-      emoji: '🚨',
-      method: 'error',
-    });
+    this.print(arguments, this.theme.error);
   }
 
   time() {
@@ -113,7 +96,7 @@ class Logger {
   }
 }
 
-const log = new Logger();
+const log = new Logger(theme);
 methods.forEach((method) => {
   console[method] = (...content) => {
     log[method](...content);
@@ -125,7 +108,7 @@ methods.forEach((method) => {
 // console.info('This is an info');
 // console.warn('This is a warning');
 // console.error('This is an error');
-// console.time('Timou');
+// console.time('This is a timer');
 // setTimeout(() => {
-//   console.timeEnd('Timou');
+//   console.timeEnd('This is a timer');
 // }, 100);
