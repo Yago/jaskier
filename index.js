@@ -10,13 +10,13 @@ const methods = [
   'print',
   'time',
   'timeEnd',
+  'trace',
   'warn',
 ];
 
 class Logger {
   constructor(theme) {
     this.theme = theme;
-    this.defaultStyle = 'color: #A6B2C0;';
     this.nodeTimer = false;
 
     this.console = {};
@@ -43,7 +43,7 @@ class Logger {
         if (isBrowser) {
           this.console[opts.method](
             `%c${currentTime} %c${opts.emoji} ${item}`,
-            this.defaultStyle,
+            theme.default,
             opts.browser
           );
         } else {
@@ -56,7 +56,7 @@ class Logger {
         if (isBrowser) {
           this.console[opts.method](
             `%c${currentTime} %c${opts.emoji}`,
-            this.defaultStyle,
+            theme.default,
             opts.browser,
             item
           );
@@ -76,6 +76,17 @@ class Logger {
     this.print(arguments, this.theme.log);
   }
 
+  trace() {
+    const date = new Date;
+    const currentTime = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
+
+    if (isBrowser) {
+      this.console.trace(`%c${currentTime} %c📍 ` + [...arguments], theme.default, theme.trace.browser);
+    } else {
+      this.console.trace(...arguments);
+    }
+  }
+
   info() {
     this.print(arguments, this.theme.info);
   }
@@ -85,12 +96,16 @@ class Logger {
   }
 
   error() {
-    this.print(arguments, this.theme.error);
+    if (arguments[0].includes('Logger.trace')) {
+      this.print(arguments, this.theme.trace);      
+    } else {
+      this.print(arguments, this.theme.error);
+    }
   }
 
   assert() {
     if (!arguments[0]) {
-      this.print(['Assertion failed: console.assert'], this.theme.error);
+      this.print(['Assertion failed: console.assert'], this.theme.assert);
     }
   }
 

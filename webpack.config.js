@@ -20,7 +20,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loaders: 'babel-loader',
         query: {
-          presets: ['es2017', 'babel-preset-es2015-without-strict'],
+          presets: ['es2017'],
         },
       },
     ],
