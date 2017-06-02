@@ -7,11 +7,11 @@ module.exports = {
   devtool: 'hidden-source-map',
   context: __dirname,
   entry: {
-    app: './index.js',
+    app: './src/jaskier.js',
   },
   output: {
     path: __dirname,
-    filename: 'jaskier.min.js',
+    filename: './dist/jaskier.min.js',
   },
   externals: {
     'chalk': 'chalk',
