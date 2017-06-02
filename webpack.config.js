@@ -11,7 +11,10 @@ module.exports = {
   },
   output: {
     path: __dirname,
-    filename: 'bundle.js',
+    filename: 'jaskier.min.js',
+  },
+  externals: {
+    'chalk': 'chalk',
   },
   module: {
     loaders: [
@@ -20,7 +23,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loaders: 'babel-loader',
         query: {
-          presets: ['es2017'],
+          presets: ['es2015'],
         },
       },
     ],
@@ -38,6 +41,9 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false },
+      sourceMap: false
+    }),
   ],
 };

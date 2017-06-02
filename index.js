@@ -1,7 +1,9 @@
-const chalk = require('chalk');
+const isBrowser = process.title === 'browser';
+
+let chalk;
+if (!isBrowser) chalk = require('chalk');
 const theme = require('./theme.js');
 
-const isBrowser = process.title === 'browser';
 const methods = [
   'assert',
   'error',
@@ -14,7 +16,7 @@ const methods = [
   'warn',
 ];
 
-class Logger {
+class Jaskier {
   constructor(theme) {
     this.theme = theme;
     this.nodeTimer = false;
@@ -96,7 +98,7 @@ class Logger {
   }
 
   error() {
-    if (arguments[0].includes('Logger.trace')) {
+    if (arguments[0].includes('Jaskier.trace')) {
       this.print(arguments, this.theme.trace);      
     } else {
       this.print(arguments, this.theme.error);
@@ -119,7 +121,7 @@ class Logger {
   }
 }
 
-const log = new Logger(theme);
+const log = new Jaskier(theme);
 methods.forEach((method) => {
   console[method] = (...content) => {
     log[method](...content);
