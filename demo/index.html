@@ -4,10 +4,84 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Jaskier - Demo</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=La+Belle+Aurore|Nunito:700" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>check your console</h1>
-    <script src="../dist/jaskier.min.js"></script>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img src="https://vignette3.wikia.nocookie.net/witcher/images/a/a1/Dandelion-TW3_render.png/revision/latest/scale-to-width-down/256?cb=20150216151806" alt="Jaskier, character of The Witcher universe. © CD PROJEKT RED">
+        </div>
+        <div class="col">
+          <h1>Jaskier</h1>
+          <h3>Colorful console troubadour !</h3>
+          <p>Jaskier is a seamless way to add more life to your console. It's only 5kb, non-obstructive and super easy to add in your current project. Open your current browser console to appreciate the result.</p>
+
+          <h2>Usage</h2>
+
+          <p>First, just had Jaskier to your project</p>
+
+          <h4>Browser:</h4>
+          <pre>
+            <code class="html">
+&lt;script src="https://rawgit.com/Yago/jaskier/master/dist/jaskier.min.js"&gt;&lt;/script&gt;
+            </code>
+          </pre>
+
+          <h4>Node:</h4>
+          <pre>
+            <code class="bash">
+$ npm install --save jaskier
+            </code>
+          </pre>
+          <p>and</p>
+          <pre>
+            <code class="javascript">
+// At the beginning of your scripts
+require('jaskier');
+            </code>
+          </pre>
+
+          <p>
+            Then, simply use your usual <code>console</code> syntax. Simple, right !
+          </p>
+
+          <pre>
+            <code class="javascript">
+console.log('This is a log');
+console.info('This is an info');
+console.warn('This is a warning');
+console.error('This is an error');
+console.assert('This is an assert' === 42);
+console.trace('This is a trace');
+
+console.time('This is a timer');
+setTimeout(() =&gt; {
+  console.timeEnd('This is a timer');
+}, 100);
+
+console.print('This is a custom message', {
+  browser: 'font-weight: bold; color: #C678DD;',
+  server: 'magenta',
+  emoji: '👻',
+  method: 'log',
+});
+            </code>
+          </pre>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="https://rawgit.com/Yago/jaskier/master/dist/jaskier.min.js"></script>
     <script>
       console.log('This is a log');
       console.info('This is an info');
